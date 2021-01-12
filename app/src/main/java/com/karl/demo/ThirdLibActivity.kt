@@ -12,6 +12,7 @@ class ThirdLibActivity : AppCompatActivity() {
         setContentView(R.layout.activity_third_lib)
 
         btn_flex_box_layout.setOnClickListener {
+            //google flexbox layout
             startActivity(Intent(this,FlexboxLayoutActivity::class.java))
         }
 
