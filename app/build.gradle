@@ -48,4 +48,5 @@ dependencies {
     implementation 'com.karl.kotlin.extension:karl-ktx:1.0'
     //第三方库
     implementation 'com.google.android:flexbox:2.0.1'
+    implementation 'org.jsoup:jsoup:1.13.1'
 }
