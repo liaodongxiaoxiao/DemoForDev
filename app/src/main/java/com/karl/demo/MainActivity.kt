@@ -10,8 +10,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        btn_android.setOnClickListener {
+            startActivity(Intent(this, AndroidActivity::class.java))
+        }
+
         btn_third.setOnClickListener {
-            startActivity(Intent(this,ThirdLibActivity::class.java))
+            startActivity(Intent(this, ThirdLibActivity::class.java))
         }
 
     }
