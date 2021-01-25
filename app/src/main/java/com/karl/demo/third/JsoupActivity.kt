@@ -17,6 +17,11 @@ import java.lang.StringBuilder
 import kotlin.concurrent.thread
 
 class JsoupActivity : AppCompatActivity() {
+
+    /*private val inflator by lazy {
+        LayoutInflater.from(context)
+    }*/
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_3_jsoup)
@@ -39,23 +44,26 @@ class JsoupActivity : AppCompatActivity() {
                     imageURL = e.attr("data-original")
                     println(imageURL)
 
-                    getImage(imageURL, cookie)
+                    //getImage(imageURL, cookie)
                 }
                 //doc.log()
 
             }
         }
 
-        v_layout
+        //v_layout
     }
 
     private fun getImage(imageUrl: String, cookies: Map<String, String>) {
-        val imageVIew = ImageView(this)
-        imageVIew.adjustViewBounds = true
+        runOnUiThread {
+            val imageVIew = ImageView(this)
+            imageVIew.adjustViewBounds = true
 
-        v_layout.addView(imageVIew)
+            v_layout.addView(imageVIew)
 
-        bindImageToView(cookies,imageVIew,imageUrl)
+            bindImageToView(cookies,imageVIew,imageUrl)
+        }
+
 
     }
 
