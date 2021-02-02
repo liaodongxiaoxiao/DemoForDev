@@ -8,10 +8,32 @@
     android:padding="10dp"
     tools:context=".ThirdLibActivity">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="布局&amp;控件相关" />
+
+    <Button
+        android:id="@+id/btn_motion_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="MotionLayout" />
+
     <Button
         android:id="@+id/btn_view_outline_provider"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="ViewOutlineProvider" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="API" />
+
+    <Button
+        android:id="@+id/btn_preferences_data_store"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="PreferencesDataStore" />
 
 </LinearLayout>

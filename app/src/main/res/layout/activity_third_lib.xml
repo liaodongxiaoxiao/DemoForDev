@@ -20,4 +20,10 @@
         android:layout_height="wrap_content"
         android:text="Jsoup" />
 
+    <Button
+        android:id="@+id/btn_mmkv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="MMKV" />
+
 </LinearLayout>
