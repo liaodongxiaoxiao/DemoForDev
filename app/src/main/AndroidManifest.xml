@@ -17,6 +17,9 @@
         <activity
             android:name=".android.MotionLayoutActivity"
             android:theme="@style/Theme.DemoForDev.NoActionBar" />
+        <activity
+            android:name=".android.MotionLayout2Activity"
+            android:theme="@style/Theme.DemoForDev.NoActionBar" />
         <activity android:name=".third.JsoupActivity" />
         <activity android:name=".third.FlexboxLayoutActivity" />
         <activity android:name=".ThirdLibActivity" />

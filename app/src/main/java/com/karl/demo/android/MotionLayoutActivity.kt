@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.constraintlayout.motion.widget.MotionLayout
 import com.karl.demo.R
+import com.karl.demo.extesion.justStartActivity
 import com.karl.kotlin.extension.log
 import com.karl.kotlin.extension.toast
 import kotlinx.android.synthetic.main.activity_android_motion_layout.*
@@ -64,7 +65,7 @@ class MotionLayoutActivity : AppCompatActivity() {
         }
 
         iv_shopping_card.setOnClickListener {
-            toast("iv_shopping_card")
+            justStartActivity(MotionLayout2Activity::class.java)
         }
 
         et_search.setOnClickListener {
