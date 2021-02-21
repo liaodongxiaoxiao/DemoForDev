@@ -12,7 +12,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DemoForDev">
-        <activity android:name=".third.MMKVActivity"></activity>
+        <activity android:name=".demo.ScrollViewDemoActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
+        <activity android:name=".DemoActivity" />
+        <activity android:name=".third.MMKVActivity" />
         <activity android:name=".android.PreferencesDataStoreActivity" />
         <activity
             android:name=".android.MotionLayoutActivity"

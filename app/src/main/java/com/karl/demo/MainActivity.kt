@@ -3,6 +3,7 @@ package com.karl.demo
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.karl.demo.extesion.justStartActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -16,6 +17,10 @@ class MainActivity : AppCompatActivity() {
 
         btn_third.setOnClickListener {
             startActivity(Intent(this, ThirdLibActivity::class.java))
+        }
+
+        btn_demo.setOnClickListener {
+            justStartActivity(DemoActivity::class.java)
         }
 
     }
