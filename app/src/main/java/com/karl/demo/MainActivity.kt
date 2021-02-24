@@ -23,5 +23,9 @@ class MainActivity : AppCompatActivity() {
             justStartActivity(DemoActivity::class.java)
         }
 
+        btn_tools.setOnClickListener {
+            justStartActivity(ToolsPageActivity::class.java)
+        }
+
     }
 }
