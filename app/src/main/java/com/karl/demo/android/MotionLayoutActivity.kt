@@ -61,7 +61,7 @@ class MotionLayoutActivity : AppCompatActivity() {
         })
 
         iv_search.setOnClickListener {
-            toast("iv_search->")
+            justStartActivity(MotionLayout3Activity::class.java)
         }
 
         iv_shopping_card.setOnClickListener {
