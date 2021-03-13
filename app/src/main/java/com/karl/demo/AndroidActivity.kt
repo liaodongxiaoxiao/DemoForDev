@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.karl.demo.android.MotionLayoutActivity
+import com.karl.demo.android.PopWindowActivity
 import com.karl.demo.android.PreferencesDataStoreActivity
 import com.karl.demo.android.ViewOutlineProviderActivity
 import com.karl.demo.extesion.justStartActivity
@@ -24,6 +25,10 @@ class AndroidActivity : AppCompatActivity() {
 
         btn_preferences_data_store.setOnClickListener {
             justStartActivity(PreferencesDataStoreActivity::class.java)
+        }
+
+        btn_pop.setOnClickListener {
+            justStartActivity(PopWindowActivity::class.java)
         }
     }
 }
