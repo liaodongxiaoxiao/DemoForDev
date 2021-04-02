@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DemoForDev">
-        <activity android:name=".android.PopWindowActivity"></activity>
+        <activity android:name=".demo.BackKeyDemoActivity"></activity>
+        <activity android:name=".android.PopWindowActivity" />
         <activity android:name=".tools.OpacityActivity" />
         <activity android:name=".ToolsPageActivity" />
         <activity
