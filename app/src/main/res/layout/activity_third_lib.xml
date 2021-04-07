@@ -26,4 +26,10 @@
         android:layout_height="wrap_content"
         android:text="MMKV" />
 
+    <Button
+        android:id="@+id/btn_refresh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SmartRefreshLayout" />
+
 </LinearLayout>

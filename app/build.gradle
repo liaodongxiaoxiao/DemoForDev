@@ -53,6 +53,10 @@ dependencies {
     implementation 'com.google.android:flexbox:2.0.1'
     implementation 'org.jsoup:jsoup:1.13.1'
 
+    implementation  'com.scwang.smart:refresh-layout-kernel:2.0.3'
+    implementation  'com.scwang.smart:refresh-header-classics:2.0.3'
+    implementation  'com.scwang.smart:refresh-footer-classics:2.0.3'
+
     implementation 'com.tencent:mmkv-static:1.2.7'
     implementation 'com.google.code.gson:gson:2.8.6'
 

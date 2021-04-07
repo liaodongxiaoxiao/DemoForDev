@@ -7,6 +7,7 @@ import com.karl.demo.extesion.justStartActivity
 import com.karl.demo.third.FlexboxLayoutActivity
 import com.karl.demo.third.JsoupActivity
 import com.karl.demo.third.MMKVActivity
+import com.karl.demo.third.SmartRefreshLayoutActivity
 import kotlinx.android.synthetic.main.activity_third_lib.*
 
 class ThirdLibActivity : AppCompatActivity() {
@@ -25,6 +26,10 @@ class ThirdLibActivity : AppCompatActivity() {
 
         btn_mmkv.setOnClickListener {
             justStartActivity(MMKVActivity::class.java)
+        }
+
+        btn_refresh.setOnClickListener {
+            justStartActivity(SmartRefreshLayoutActivity::class.java)
         }
 
     }
