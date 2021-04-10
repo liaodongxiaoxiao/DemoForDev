@@ -2,6 +2,7 @@ package com.karl.demo.android
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
@@ -18,6 +19,7 @@ import kotlinx.android.synthetic.main.activity_android_motion_layout.root
 
 class MotionLayout2Activity : AppCompatActivity() {
 
+    private val TAG = "MotionLayout2"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +53,23 @@ class MotionLayout2Activity : AppCompatActivity() {
         rv.layoutManager = LinearLayoutManager(this)
         rv.adapter = stringAdapter
 
+        root.addTransitionListener(object : MotionLayout.TransitionListener {
+            override fun onTransitionStarted(p0: MotionLayout?, p1: Int, p2: Int) {
+                Log.e(TAG, "onTransitionStarted: ")
+            }
 
+            override fun onTransitionChange(p0: MotionLayout?, p1: Int, p2: Int, p3: Float) {
+                Log.e(TAG, "onTransitionChange: ")
+            }
+
+            override fun onTransitionCompleted(p0: MotionLayout?, p1: Int) {
+                Log.e(TAG, "onTransitionCompleted: ")
+            }
+
+            override fun onTransitionTrigger(p0: MotionLayout?, p1: Int, p2: Boolean, p3: Float) {
+                Log.e(TAG, "onTransitionTrigger: ")
+            }
+        })
     }
 }
 
