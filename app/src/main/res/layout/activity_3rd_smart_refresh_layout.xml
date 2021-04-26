@@ -30,6 +30,12 @@
         android:textSize="16sp"
         android:textStyle="bold" />
 
+    <Button
+        android:id="@+id/btn_reset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="重置" />
+
     <com.scwang.smart.refresh.layout.SmartRefreshLayout
         android:id="@+id/srl"
         android:layout_width="match_parent"
@@ -54,7 +60,8 @@
             android:layout_height="wrap_content"
             app:srlTextFinish=""
             app:srlTextLoading="正在加载"
-            app:srlTextNothing="已全部加载完毕" />
+            app:srlTextNothing="已全部加载完毕"
+            app:srlTextPulling="" />
     </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 
 </LinearLayout>

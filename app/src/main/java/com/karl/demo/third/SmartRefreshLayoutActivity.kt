@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
 import com.karl.demo.R
 import com.karl.kotlin.extension.inflate
@@ -26,15 +27,28 @@ class SmartRefreshLayoutActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_3rd_smart_refresh_layout)
 
+        btn_reset.setOnClickListener {
+
+            //srl.refreshFooter?.view?.visibility = View.GONE
+            srl.setEnableLoadMore(true)
+            srl.setNoMoreData(false)
+            //srl.autoRefresh()
+            srl.closeHeaderOrFooter()
+            pageNumber = 1
+            getDataFromNet()
+        }
+
         rv.layoutManager = LinearLayoutManager(this)
         rv.adapter = adapter
 
         srl.setOnLoadMoreListener {
+            //srl.refreshFooter?.view?.visibility = View.VISIBLE
             pageNumber += 1
             getDataFromNet()
         }
 
         srl.setOnRefreshListener {
+            srl.setNoMoreData(false)
             pageNumber = 1
             getDataFromNet()
         }
@@ -100,7 +114,7 @@ class OpacityAdapter : RecyclerView.Adapter<OpacityAdapter.OpacityViewHolder>() 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OpacityViewHolder {
-        return OpacityViewHolder(parent.inflate(R.layout.item_tools_opacity))
+        return OpacityViewHolder(parent.inflate(R.layout.item_srl_opacity))
     }
 
     override fun onBindViewHolder(holder: OpacityViewHolder, position: Int) {
@@ -114,4 +128,16 @@ class OpacityAdapter : RecyclerView.Adapter<OpacityAdapter.OpacityViewHolder>() 
     }
 
     override fun getItemCount(): Int = _data.size
+}
+
+fun RecyclerView.smoothSnapToPosition(
+    position: Int,
+    snapMode: Int = LinearSmoothScroller.SNAP_TO_START
+) {
+    val smoothScroller = object : LinearSmoothScroller(this.context) {
+        override fun getVerticalSnapPreference(): Int = snapMode
+        override fun getHorizontalSnapPreference(): Int = snapMode
+    }
+    smoothScroller.targetPosition = position
+    layoutManager?.startSmoothScroll(smoothScroller)
 }
