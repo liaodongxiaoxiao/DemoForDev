@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="5dp">
+
+    <TextView
+        android:id="@+id/tv_ball"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/ic_icon_circle_blue_line"
+        android:gravity="center"
+        android:text="01"
+        android:textColor="#2eb2ef"
+        android:textSize="18sp" />
+</LinearLayout>
