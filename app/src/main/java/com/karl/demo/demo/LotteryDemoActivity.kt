@@ -6,21 +6,44 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
+import com.google.android.material.tabs.TabLayoutMediator
 import com.karl.demo.R
 import com.karl.kotlin.extension.inflateNullRoot
 import com.karl.kotlin.extension.log
 import kotlinx.android.synthetic.main.activity_demo_lottery.*
+import kotlinx.android.synthetic.main.fragment_demo_lottery_red.*
 
-class LotteryDemoActivity : AppCompatActivity() {
-    private val selectedRedAdapter by lazy { SelectedBallAdapter(isRed = true) }
+class LotteryDemoActivity : FragmentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_demo_lottery)
+        vp_page.adapter = PagerAdapter(this)
+        TabLayoutMediator(tl_title, vp_page) { tab, position ->
+            if (position==0){
+                tab.text="红球"
+            }else{
+                tab.text="蓝球"
+            }
+        }.attach()
 
+    }
+
+
+}
+
+class RedFragment : Fragment(R.layout.fragment_demo_lottery_red) {
+    private val selectedRedAdapter by lazy { SelectedBallAdapter(isRed = true) }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         rv_red.layoutManager = getLayoutManager()
         val redAdapter = BallAdapter(true)
         redAdapter.setOnBallSelectedListener { _, selected ->
@@ -32,8 +55,9 @@ class LotteryDemoActivity : AppCompatActivity() {
         rv_red_selected.adapter = selectedRedAdapter
     }
 
+
     private fun getLayoutManager(): FlexboxLayoutManager {
-        val layoutManager = FlexboxLayoutManager(this)
+        val layoutManager = FlexboxLayoutManager(context)
         layoutManager.flexDirection = FlexDirection.ROW
         layoutManager.justifyContent = JustifyContent.FLEX_START
         return layoutManager
@@ -110,8 +134,28 @@ class LotteryDemoActivity : AppCompatActivity() {
             }
     }
 
+}
+
+class BlueFragment : Fragment(R.layout.fragment_demo_lottery_blue) {
 
 }
+
+
+/**
+ * 适配器
+ */
+class PagerAdapter(context: FragmentActivity) : FragmentStateAdapter(context) {
+    override fun getItemCount(): Int = 2
+
+    override fun createFragment(position: Int): Fragment {
+      return  if (position==0){
+            RedFragment()
+        }else{
+            BlueFragment()
+        }
+    }
+}
+
 
 class BallAdapter(private val isRed: Boolean = false) :
     RecyclerView.Adapter<BallViewHolder>() {
@@ -222,8 +266,14 @@ class BallViewHolder(root: View) : RecyclerView.ViewHolder(root) {
     val ball: TextView = root.findViewById(R.id.tv_ball)
 }
 
+/**
+ * entity
+ */
 data class Ball(val num: String, var isChecked: Boolean = false, var canChecked: Boolean = true)
 
+/**
+ * 扩展方法
+ */
 fun Int.toBall(): String {
     return if (this < 10) {
         "0$this"

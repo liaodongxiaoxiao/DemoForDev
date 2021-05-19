@@ -16,14 +16,14 @@
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.DemoForDev">
         <activity android:name=".demo.WeatherDemoActivity">
+        </activity>
+        <activity android:name=".demo.LotteryDemoActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-        <activity android:name=".demo.LotteryDemoActivity"></activity>
         <activity android:name=".demo.MQTTDemoActivity" />
         <activity android:name=".third.SmartRefreshLayoutActivity" />
         <activity android:name=".demo.BackKeyDemoActivity" />
