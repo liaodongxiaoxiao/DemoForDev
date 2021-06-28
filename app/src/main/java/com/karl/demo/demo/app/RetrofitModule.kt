@@ -1,13 +1,19 @@
 package com.karl.demo.demo.app
 
+import android.content.Context
 import com.google.gson.GsonBuilder
 import com.karl.demo.BuildConfig
+import com.karl.kotlin.extension.getSPByKey
 import com.karl.kotlin.extension.log
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -43,10 +49,36 @@ object RetrofitModule {
     }
 
     @Provides
+    fun provideTokenInterceptorLogger(@ApplicationContext context: Context): Interceptor {
+        return object : Interceptor {
+            override fun intercept(chain: Interceptor.Chain): Response {
+                val request = chain.request()
+                request.url.toString().log()
+                if (request.url.toString().contains("todo")) {
+                    val builder: Request.Builder = request.newBuilder()
+                        .addHeader(
+                            "Content-Type",
+                            "application/x-www-form-urlencoded; charset=UTF-8"
+                        )
+                        .addHeader("Accept-Encoding", "gzip, deflate")
+                        .addHeader("Connection", "keep-alive")
+                        .addHeader("Accept", "*/*")
+                        .addHeader("Authorization", "Bearer ${context.getSPByKey("token")}")
+                    return chain.proceed(builder.build())
+                }
+                return chain.proceed(request)
+            }
+
+        }
+    }
+
+
+    @Provides
     @Singleton
-    fun provideOkHttpClient(interceptor: HttpLoggingInterceptor): OkHttpClient {
+    fun provideOkHttpClient(interceptor: HttpLoggingInterceptor,tokenInterceptor:Interceptor): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(interceptor)
+            .addInterceptor(tokenInterceptor)
             .connectTimeout(30, TimeUnit.SECONDS)
             .writeTimeout(10, TimeUnit.MINUTES)
             .readTimeout(10, TimeUnit.MINUTES)
@@ -88,7 +120,7 @@ object RetrofitModule {
         client: OkHttpClient
     ): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("http://192.168.1.107:7070/")
+            .baseUrl("http://192.168.1.109:8080/")
             //.addCallAdapterFactory(callAdapterFactory)
             .addConverterFactory(converterFactory)
             .client(client)
