@@ -36,7 +36,7 @@ class HtmlDemoActivity : AppCompatActivity() {
     """.trimIndent()
 
     private val info="""
-        <ol ><li><span style=\"font-family:宋体;font-size:12.0pt;\">配送范围：中国大陆地区（生鲜类商品受疫情管控部分地区暂不发货，不同商品配送范围会有所差异，以商品详情为准）</span></li><li><span style=\"font-family:宋体;font-size:12.0pt;\">运费说明：</span></li><li><span style=\"font-family:宋体;font-size:12.0pt;\">日系好物<span style=\"font-family:宋体;font-size:12.0pt;\">/</span>文创精选</span><span style=\"font-family:宋体;font-size:12.0pt;\">专区的商品包邮；</span></li><li><span style=\"font-family:宋体;font-size:12.0pt;\">收到商品之日起七天内因质量问题退货而产生的运费由卖家承担，退货快递支持圆通、神通、中通、韵达，<strong style=\"font-family:宋体;font-size:12.0pt;\">不支持货到付款</strong>；</span></li><li><span style=\"font-family:宋体;font-size:12.0pt;\">运费不单独开具发票。</span></li><li><span style=\"font-family:宋体;font-size:12.0pt;\">退换货须知：</span></li><li><span style=\"font-family:宋体;font-size:12.0pt;\">收到商品七日内可申请退货：收到商品之日起算的七天内，用户可以通过<span style=\"font-family:宋体;font-size:12.0pt;\">APP</span>在线客服申请退货；自申请之日起七个工作日内将退积分或退款到兑换账户；（质量问题不包括人为破坏或因使用不当造成的破损、变形、染色等问题）</span></li><li><span style=\"font-family:宋体;font-size:12.0pt;\">食品类商品请在签收后第一时间检查，如果商品有腐坏、破损等情况，请把商品和快递面单一起拍照并在<span style=\"font-family:宋体;font-size:12.0pt;\">24</span>小时内联系客服，不能提供符合要求的照片或未能在<span style=\"font-family:宋体;font-size:12.0pt;\">24</span>小时内联系客服，将不予退货、退款处理</span></li><li><span style=\"font-family:宋体;font-size:12.0pt;\">发票问题：如需开具发票，可在线联系客服申请发票，仅支持现金部分开具发票；</span></li><li><span style=\"font-family:宋体;font-size:12.0pt;\">如何联系我们：<span style=\"font-family:宋体;font-size:12.0pt;\">APP</span>在线客服 &nbsp;周一至周日 <span style=\"font-family:宋体;font-size:12.0pt;\">09:00-19:00</span></span></li></ol>
+        
     """.trimIndent()
 
 

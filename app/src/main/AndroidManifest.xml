@@ -15,20 +15,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DemoForDev"
         android:usesCleartextTraffic="true">
+        <activity android:name=".demo.OkHttpUtilsDemoActivity">
+        </activity>
         <activity android:name=".demo.HtmlDemoActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".demo.WeatherDemoActivity" />
         <activity android:name=".demo.LoginActivity" />
         <activity android:name=".demo.RegisterActivity" />
-        <activity android:name=".demo.TodoMainActivity">
-
-        </activity>
-        <activity android:name=".demo.LotteryDemoActivity"></activity>
+        <activity android:name=".demo.TodoMainActivity"></activity>
+        <activity android:name=".demo.LotteryDemoActivity" />
         <activity android:name=".demo.MQTTDemoActivity" />
         <activity android:name=".third.SmartRefreshLayoutActivity" />
         <activity android:name=".demo.BackKeyDemoActivity" />
@@ -55,7 +51,14 @@
         <activity android:name=".ThirdLibActivity" />
         <activity android:name=".android.ViewOutlineProviderActivity" />
         <activity android:name=".AndroidActivity" />
-        <activity android:name=".MainActivity" /> <!-- setting for mqtt -->
+        <activity android:name=".MainActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <!-- setting for mqtt -->
         <service android:name="org.eclipse.paho.android.service.MqttService" />
     </application>
 
