@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".demo.ScrollViewListenerDemoActivity">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nsv"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/v_buttons"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:padding="@dimen/dp_10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:textSize="@dimen/sp_15"
+                android:textStyle="bold"
+                android:text="自定义View，可以直接拷贝就可以使用"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:text="很多细小的知识，我们平时总是因为开发的时候太忙来不及去深究，但是作为开发者我们还是要对技术保持严谨，需要通过自己的实战形成自己的经验，有些很细小的知识可能在关键时候起到意向不到的作用，如果平时注意积累，到时候会事半功倍。"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:text=" Android ScrollView监听滑动到顶部和底部,虽然网上很多资料都有说,但是不全,而且有些细节没说清楚 使用场景: 1. 做一些复杂动画的时候,需要动态判断当前的ScrollView是否滚动到底部..."
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:text="项目开发中遇到了这样的一个问题,界面最外层是ScrollView,然后里面有嵌套了一个ListView还有其他可以获取焦点的View,然后每次打开界面都会自动滚动到最底部,经..."
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:text="Android ❤️s callback. All framework and jetpack libraries APIs uses it to notify events, but it becomes messy when you have nested callbacks. It’s difficult to understand and scale. Also, the chances of bugs are very high when you’re dealing with nested callbacks.
+The good thing is we can easily avoid it through Kotlin’s coroutine APIs. callback-ktx is an attempt to wrap the potential framework and jetpack callback-based APIs into suspending extension functions. In case of multiple callbacks, it exposes Flow to observe all callbacks.
+It would be kinda redundant if I explain all the benefits you will get by wrapping callbacks into suspending functions as Chris Banes blog series already covered them nicely. If you haven’t read it I would suggest reading it before continuing this one.
+It is not difficult at all to wrap callback-based APIs into suspending function. What was challenging though was to go through all framework and jetpack APIs and figure out which API could be benefited. Let’s see what this library is capable of as of now."
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:text="Kotlin has this great feature where you can indicate the names of the parameters when you call a function. For example:
+acct = getAccount(accountNumber = , routingNumber =
+            What’s nice is that it makes it clear to the reader what each parameter is, without having to go look at the function definition to see which parameter is at each position. More importantly, it ensures that the correct values are passed in to the correct parameters. So if the author got the parameters in the wrong order, named parameters ensure the correct values still get assigned to the correct parameters:
+            acct = getAccount(routingNumber = , accountNumber =
+            The above examples are not very realistic, in that you would not pass in “magic constants” like this; rather you would pass variables in to your functions. So assuming getAccount() was defined as follows:
+            fun getAccount(accountNumber: String, routingNumber: String): Account
+            And you got the ordering of the parameters wrong:
+            acct = getAccount(routeNum, acctNum)
+            This code would, of course, break in production because you are transposing the parameters. The nightmare case is that this function actually returns something, but it returns the wrong account because you passed the wrong values in!
+            If you use named parameters, it would be clear at the callsite that the correct values were being passed to the correct parameters:
+            acct = getAccount(routingNumber = routeNum, accountNumber = acctNum)
+            Where it gets weird is if the names of your actual parameters match the names of the formal parameters. The below looks a little redundant:
+            val accountNumber = viewBinding.accountField.text
+            val routingNumber = viewBinding.routingField.text
+            acct = getAccount(
+            routingNumber = routingNumber,
+            accountNumber = accountNumber
+            )
+            Despite how repetitive this looks, I would still argue this is advisable, because you are ensuring that the proper values are passed to the correct parameters. It is just circumstance that the names of the values match the names of the parameters, but by using named parameters you avoid accidental transposition.
+            Note that such transposition will get caught by the compiler if neighboring parameters have different types. For instance, if you have a function with a String followed by a Boolean parameter, then if you transpose those parameters the compiler will of course catch that:
+            fun getBank(routingNumber: String, isCreditUnion: Boolean): Bank
+            // Callsite
+            bank = getBank(isCreditUnion, routeNum) // Generates compiler error
+            There are also cases where parameter transposition may not matter. For instance, this is true of symmetric functions. One example is addition, where you can transpose the parameters and the result is the same:
+            fun vectorAdd(vector1: Vector, vector2: Vector): Vector
+            resultant1 = vectorAdd(Vector(1, 2), Vector(3, 4))
+            resultant2 = vectorAdd(Vector(3, 4), Vector(1, 2))
+            assertEquals(resultant1, resultant2)
+            For the case above, using named parameters is really not necessary, and in fact can make the code look a bit clunkier:
+            // Named parameters in this case doesn't look as nice, and does
+            // not provide much benefit
+            resultant = vectorAdd(
+            vector1 = Vector(1, 2),
+            vector2 = Vector(3, 4)
+            )
+            But for non-symmetric functions, named parameters are helpful when neighboring parameters have the same type. Because, like in the bank account case above, the compiler will not catch such coding errors. Even unit testing may not catch such issues if you are simply using mock answers for functions (especially if the parameter matchers are “any”). As such, I would recommend making use of named parameters in non-symmetric functions, even in cases where the callsite parameter names match the declared parameter names."
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+
+    </androidx.core.widget.NestedScrollView>
+
+    <LinearLayout
+        android:id="@+id/v_buttons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/dp_10"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/btn_no"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="refuse" />
+
+        <Button
+            android:id="@+id/btn_yes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:enabled="false"
+            android:text="accept" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
