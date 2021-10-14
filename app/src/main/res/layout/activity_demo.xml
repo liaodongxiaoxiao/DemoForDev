@@ -25,4 +25,52 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="MQTT" />
+
+    <Button
+        android:id="@+id/btn_demo_html"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="WebView Html样式" />
+
+    <Button
+        android:id="@+id/btn_okhttp_util"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="OkHttp Utils" />
+
+    <Button
+        android:id="@+id/btn_Scrollview_demo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ScrollView Demo" />
+
+    <Button
+        android:id="@+id/btn_Scrollview_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ScrollView滚动到最底端" />
+
+    <Button
+        android:id="@+id/btn_view_to_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="View生成图片" />
+
+    <Button
+        android:id="@+id/btn_to_do"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TODO List" />
+
+    <Button
+        android:id="@+id/btn_weather"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Weather" />
+
+    <Button
+        android:id="@+id/btn_lottery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Lottery" />
 </LinearLayout>
