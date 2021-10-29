@@ -11,9 +11,9 @@ class DemoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_demo)
 
-        btn_demo_scrollview.setOnClickListener {
+        /*btn_demo_scrollview.setOnClickListener {
             justStartActivity(ScrollViewDemoActivity::class.java)
-        }
+        }*/
 
         btn_demo_back.setOnClickListener {
             justStartActivity(BackKeyDemoActivity::class.java)

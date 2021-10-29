@@ -6,6 +6,8 @@ import android.view.View
 import com.karl.demo.R
 import android.view.ViewTreeObserver
 import android.view.ViewTreeObserver.OnScrollChangedListener
+import com.karl.kotlin.extension.log
+import com.karl.kotlin.extension.roundHalfUpStr
 import kotlinx.android.synthetic.main.demo_activity_scroll_view_listener.*
 
 
@@ -16,28 +18,20 @@ class ScrollViewListenerDemoActivity : AppCompatActivity() {
 
         nsv.viewTreeObserver.addOnScrollChangedListener(OnScrollChangedListener {
             val view: View = nsv.getChildAt(nsv.childCount - 1) as View
-            val diff: Int = view.bottom - (nsv.height + nsv.scrollY)
+            val height = nsv.height
+            val sy = nsv.scrollY
+            val bottom = view.bottom
+
+            val diff: Int = bottom - (height + sy)
             if (diff == 0) {
                 btn_yes.isEnabled = true
             }
+
+
+            val scrollPosition =( (height + sy)* 100.0 / view.bottom )
+            tv_pr.text = "${scrollPosition.roundHalfUpStr(2)}%"
+            //pb.setProgress(scrollPosition.toInt(),true)
+            pb.progress = scrollPosition.toInt()
         })
-        /**
-        scroll.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
-        @Override
-        public void onScrollChanged() {
-        View view = (View) scroll.getChildAt(scroll.getChildCount() - 1);
-
-        int diff = (view.getBottom() - (scroll.getHeight() + scroll
-        .getScrollY()));
-
-        if (diff == 0) {
-        getPlaylistFromServer("more");
-        }
-        }
-        });
-         *
-         *
-         *
-         */
     }
 }

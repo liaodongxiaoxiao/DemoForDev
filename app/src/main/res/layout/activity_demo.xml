@@ -8,11 +8,11 @@
     android:padding="10dp"
     tools:context=".DemoActivity">
 
-    <Button
+    <!--<Button
         android:id="@+id/btn_demo_scrollview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ScrollView" />
+        android:text="ScrollView" />-->
 
     <Button
         android:id="@+id/btn_demo_back"
