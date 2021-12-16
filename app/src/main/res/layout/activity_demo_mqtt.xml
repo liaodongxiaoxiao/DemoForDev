@@ -8,6 +8,19 @@
     android:padding="10dp"
     tools:context=".demo.MQTTDemoActivity">
 
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="MQTT Host"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/et_host"
+        android:layout_width="@dimen/dp_200"
+        android:layout_height="wrap_content"/>
+
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -18,6 +18,7 @@ import org.eclipse.paho.client.mqttv3.*
 class MQTTDemoActivity : AppCompatActivity() {
 
     private lateinit var mqttClient: MqttAndroidClient
+    private var host = "192.168.1.103:1883"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +27,8 @@ class MQTTDemoActivity : AppCompatActivity() {
         btn_start.setOnClickListener {
             connect(this)
         }
+
+        et_host.setText(host)
 
         btn_subscribe.setOnClickListener {
             if (et_topic.isEmpty()) {
@@ -38,7 +41,11 @@ class MQTTDemoActivity : AppCompatActivity() {
     }
 
     fun connect(context: Context) {
-        val serverURI = "tcp://192.168.1.107:1883"
+        if (et_host.isEmpty()){
+            toast("请求输入主机地址")
+            return
+        }
+        val serverURI = "tcp://${et_host.text}"
         mqttClient = MqttAndroidClient(context, serverURI, "kotlin_client")
         mqttClient.setCallback(object : MqttCallback {
             override fun messageArrived(topic: String?, message: MqttMessage?) {
