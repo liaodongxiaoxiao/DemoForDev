@@ -1,22 +1,19 @@
 package com.karl.demo.third
 
-import android.content.Context
 import android.os.Bundle
-import android.view.View
 import android.widget.ImageView
-import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.load.model.LazyHeaders
+import com.karl.demo.BaseActivity
 import com.karl.demo.R
+import com.karl.demo.databinding.Activity3JsoupBinding
 import com.karl.kotlin.extension.log
-import kotlinx.android.synthetic.main.activity_3_jsoup.*
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
-import java.lang.StringBuilder
 import kotlin.concurrent.thread
 
-class JsoupActivity : AppCompatActivity() {
+class JsoupActivity : BaseActivity<Activity3JsoupBinding>(Activity3JsoupBinding::inflate) {
 
     /*private val inflator by lazy {
         LayoutInflater.from(context)
@@ -24,9 +21,9 @@ class JsoupActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_3_jsoup)
+        //setContentView(R.layout.activity_3_jsoup)
 
-        btn_test.setOnClickListener {
+        binding.btnTest.setOnClickListener {
             thread {
                 val res = Jsoup
                     .connect("https://www.ikanwzd.top/chapter/596")
@@ -59,9 +56,9 @@ class JsoupActivity : AppCompatActivity() {
             val imageVIew = ImageView(this)
             imageVIew.adjustViewBounds = true
 
-            v_layout.addView(imageVIew)
+            binding.vLayout.addView(imageVIew)
 
-            bindImageToView(cookies,imageVIew,imageUrl)
+            bindImageToView(cookies, imageVIew, imageUrl)
         }
 
 
@@ -69,7 +66,7 @@ class JsoupActivity : AppCompatActivity() {
 
     fun bindImageToView(cookies: Map<String, String>, view: ImageView, url: String) {
         val builder = StringBuilder()
-        for ((key,value) in cookies){
+        for ((key, value) in cookies) {
             builder.append(key).append("=").append(value).append(";")
         }
 

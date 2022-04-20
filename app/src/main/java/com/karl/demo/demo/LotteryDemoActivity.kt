@@ -2,10 +2,10 @@ package com.karl.demo.demo
 
 import android.graphics.Color
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
@@ -15,18 +15,23 @@ import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
 import com.google.android.material.tabs.TabLayoutMediator
 import com.karl.demo.R
+import com.karl.demo.databinding.ActivityDemoLotteryBinding
+import com.karl.demo.databinding.FragmentDemoLotteryRedBinding
 import com.karl.kotlin.extension.inflateNullRoot
 import com.karl.kotlin.extension.log
-import kotlinx.android.synthetic.main.activity_demo_lottery.*
-import kotlinx.android.synthetic.main.fragment_demo_lottery_red.*
 
 class LotteryDemoActivity : FragmentActivity() {
 
+    private lateinit var binding: ActivityDemoLotteryBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_demo_lottery)
-        vp_page.adapter = PagerAdapter(this)
-        TabLayoutMediator(tl_title, vp_page) { tab, position ->
+        binding = ActivityDemoLotteryBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+
+        binding.vpPage.adapter = PagerAdapter(this)
+        TabLayoutMediator(binding.tlTitle, binding.vpPage) { tab, position ->
             if (position==0){
                 tab.text="红球"
             }else{
@@ -41,18 +46,34 @@ class LotteryDemoActivity : FragmentActivity() {
 
 class RedFragment : Fragment(R.layout.fragment_demo_lottery_red) {
     private val selectedRedAdapter by lazy { SelectedBallAdapter(isRed = true) }
+    private lateinit var binding: FragmentDemoLotteryRedBinding
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = FragmentDemoLotteryRedBinding.inflate(inflater)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        rv_red.layoutManager = getLayoutManager()
+
         val redAdapter = BallAdapter(true)
         redAdapter.setOnBallSelectedListener { _, selected ->
             setRedBallSelectedInfo(selected)
         }
-        rv_red.adapter = redAdapter
 
-        rv_red_selected.layoutManager = getLayoutManager()
-        rv_red_selected.adapter = selectedRedAdapter
+        binding.apply {
+            rvRed.layoutManager = getLayoutManager()
+            rvRed.adapter = redAdapter
+
+            rvRedSelected.layoutManager = getLayoutManager()
+            rvRedSelected.adapter = selectedRedAdapter
+        }
+
+
     }
 
 
@@ -115,7 +136,7 @@ class RedFragment : Fragment(R.layout.fragment_demo_lottery_red) {
         selectedRedAdapter.setData(data)
         selectedRedAdapter.notifyDataSetChanged()
 
-        tv_has_red.text =
+        binding.tvHasRed.text =
             when {
                 selected.isEmpty() -> {
                     "请选择6个红色号码"

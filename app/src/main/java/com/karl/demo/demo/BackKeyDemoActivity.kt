@@ -1,17 +1,16 @@
 package com.karl.demo.demo
 
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.KeyEvent
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
-import com.karl.demo.R
+import com.karl.demo.BaseActivity
+import com.karl.demo.databinding.ActivityDemoBackKeyBinding
 import com.karl.kotlin.extension.log
 
-class BackKeyDemoActivity : AppCompatActivity() {
+class BackKeyDemoActivity :
+    BaseActivity<ActivityDemoBackKeyBinding>(ActivityDemoBackKeyBinding::inflate) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_demo_back_key)
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {

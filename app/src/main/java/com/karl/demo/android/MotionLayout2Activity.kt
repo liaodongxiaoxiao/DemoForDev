@@ -1,6 +1,5 @@
 package com.karl.demo.android
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -9,22 +8,20 @@ import android.widget.TextView
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.karl.demo.BaseActivity
 import com.karl.demo.R
+import com.karl.demo.databinding.ActivityAndroidMotion2LayoutBinding
+import com.karl.demo.extesion.justStartActivity
 import com.karl.kotlin.extension.inflate
-import com.karl.kotlin.extension.log
-import com.karl.kotlin.extension.toast
-import kotlinx.android.synthetic.main.activity_android_motion2_layout.*
-import kotlinx.android.synthetic.main.activity_android_motion_layout.*
-import kotlinx.android.synthetic.main.activity_android_motion_layout.root
 
-class MotionLayout2Activity : AppCompatActivity() {
+class MotionLayout2Activity :
+    BaseActivity<ActivityAndroidMotion2LayoutBinding>(ActivityAndroidMotion2LayoutBinding::inflate) {
 
     private val TAG = "MotionLayout2"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_android_motion2_layout)
-        root.setDebugMode(MotionLayout.DEBUG_SHOW_PATH)
+        binding.root.setDebugMode(MotionLayout.DEBUG_SHOW_PATH)
 
         val data: MutableList<String> = mutableListOf()
         data.add("切尔西")
@@ -50,26 +47,33 @@ class MotionLayout2Activity : AppCompatActivity() {
         data.add("上海绿地申花")
 
         val stringAdapter = StringAdapter(data)
-        rv.layoutManager = LinearLayoutManager(this)
-        rv.adapter = stringAdapter
+        binding.apply {
+            rv.layoutManager = LinearLayoutManager(this@MotionLayout2Activity)
+            rv.adapter = stringAdapter
 
-        root.addTransitionListener(object : MotionLayout.TransitionListener {
-            override fun onTransitionStarted(p0: MotionLayout?, p1: Int, p2: Int) {
-                Log.e(TAG, "onTransitionStarted: ")
+            tvTitle.setOnClickListener {
+                justStartActivity(MotionLayout4Activity::class.java)
             }
 
-            override fun onTransitionChange(p0: MotionLayout?, p1: Int, p2: Int, p3: Float) {
-                Log.e(TAG, "onTransitionChange: ")
-            }
+            root.addTransitionListener(object : MotionLayout.TransitionListener {
+                override fun onTransitionStarted(p0: MotionLayout?, p1: Int, p2: Int) {
+                    Log.e(TAG, "onTransitionStarted: ")
+                }
 
-            override fun onTransitionCompleted(p0: MotionLayout?, p1: Int) {
-                Log.e(TAG, "onTransitionCompleted: ")
-            }
+                override fun onTransitionChange(p0: MotionLayout?, p1: Int, p2: Int, p3: Float) {
+                    Log.e(TAG, "onTransitionChange: ")
+                }
 
-            override fun onTransitionTrigger(p0: MotionLayout?, p1: Int, p2: Boolean, p3: Float) {
-                Log.e(TAG, "onTransitionTrigger: ")
-            }
-        })
+                override fun onTransitionCompleted(p0: MotionLayout?, p1: Int) {
+                    Log.e(TAG, "onTransitionCompleted: ")
+                }
+
+                override fun onTransitionTrigger(p0: MotionLayout?, p1: Int, p2: Boolean, p3: Float) {
+                    Log.e(TAG, "onTransitionTrigger: ")
+                }
+            })
+        }
+
     }
 }
 

@@ -1,27 +1,22 @@
 package com.karl.demo.demo
 
 import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
-import android.text.Html
-import android.text.Spannable
-import android.text.Spanned
-import android.view.ViewGroup
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.text.HtmlCompat
+import com.karl.demo.BaseActivity
 import com.karl.demo.R
-import kotlinx.android.synthetic.main.activity_html_demo.*
+import com.karl.demo.databinding.ActivityHtmlDemoBinding
 
-class HtmlDemoActivity : AppCompatActivity() {
+class HtmlDemoActivity : BaseActivity<ActivityHtmlDemoBinding>(ActivityHtmlDemoBinding::inflate) {
     private val html1 =
         "<p style='font-size: 0;'><span style='color: rgb(102, 102, 102);font-size: 14px;'><strong>不发货地区</strong></span><span style='color: rgb(153, 153, 153);'><strong>：</strong></span><span style='color: rgb(209, 72, 65);font-size: 14px;'>新疆，西藏，港澳台地区，山西，陕西，山东，河南，河北，黑龙江。</span></p>"
     private val html2 =
         "<p><span style=\"color: rgb(102, 102, 102);\"><strong>不发货地区</strong></span><span style=\"color: rgb(153, 153, 153);\"><strong>：</strong></span><span style=\"color: rgb(209, 72, 65);\">新疆，西藏，港澳台地区，山西，陕西，山东，河南，河北，黑龙江。</span></p>"
-  private val html3 =
+    private val html3 =
         "<span><p style='margin: 0;display: inline-block;'><span style=\"color: rgb(102, 102, 102);\"><strong>不发货地区</strong></span><span style=\"color: rgb(153, 153, 153);\"><strong>：</strong></span><span style=\"color: rgb(209, 72, 65);\">新疆，西藏，港澳台地区，山西，陕西，山东，河南，河北，黑龙江。</span></p></span>"
 
-    private val html4 ="<p style='margin: 0;display: inline-block;'><strong><strong><span style=\"color: rgb(102, 102, 102);\">发货时间：</span></strong></strong><strong><span style=\"color: rgb(235, 107, 86);\">早7点到晚9点。</span></strong></p>"
-    private val html5 ="""
+    private val html4 =
+        "<p style='margin: 0;display: inline-block;'><strong><strong><span style=\"color: rgb(102, 102, 102);\">发货时间：</span></strong></strong><strong><span style=\"color: rgb(235, 107, 86);\">早7点到晚9点。</span></strong></p>"
+    private val html5 = """
         
         <p style="margin:0;">
             1.我是我是左侧面内容我是左侧面内容我是左侧面内容我是左侧面内容我是左侧面内容
@@ -31,24 +26,27 @@ class HtmlDemoActivity : AppCompatActivity() {
         </p >
     """.trimIndent()
 
-    private val html6="""
+    private val html6 = """
         <p style='margin: 0;display: inline-block;padding:0;'><span style="color: rgb(102, 102, 102);"><strong>不发货地区</strong></span><span style="color: rgb(153, 153, 153);"><strong>：</strong></span><span style="color: rgb(209, 72, 65);">新疆，西藏，港澳台地区。</span></p>
     """.trimIndent()
 
-    private val info="""
+    private val info = """
         
     """.trimIndent()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_html_demo)
+        //setContentView(R.layout.activity_html_demo)
 
         //tv1.text = getSpan(html5)
-        wv1.setBackgroundColor(Color.TRANSPARENT)
-        wv2.setBackgroundColor(Color.TRANSPARENT)
-        wv1.loadData(html1, "text/html", "UTF-8")
-        wv2.loadData(getPageHtml(info), "text/html", "UTF-8")
+        binding.apply {
+            wv1.setBackgroundColor(Color.TRANSPARENT)
+            wv2.setBackgroundColor(Color.TRANSPARENT)
+            wv1.loadData(html1, "text/html", "UTF-8")
+            wv2.loadData(getPageHtml(info), "text/html", "UTF-8")
+        }
+
         /*val params: ViewGroup.LayoutParams = v2.layoutParams
         val paramsWV2 = wv2.layoutParams
         params.height = paramsWV2.height-60
@@ -63,7 +61,7 @@ class HtmlDemoActivity : AppCompatActivity() {
         }
     }*/
 
-    private fun getPageHtml(body:String):String{
+    private fun getPageHtml(body: String): String {
         return """
             <html>
             <head>

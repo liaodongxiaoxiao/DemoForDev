@@ -9,6 +9,12 @@
             app:dragDirection="dragUp"
             app:touchAnchorId="@id/scroll"
             app:touchAnchorSide="top" />
+        <KeyFrameSet>
+            <KeyTrigger
+                app:framePosition="150"
+                app:onPositiveCross="hide"
+                app:triggerId="@id/tv_title"/>
+        </KeyFrameSet>
     </Transition>
 
     <!--开始 -->

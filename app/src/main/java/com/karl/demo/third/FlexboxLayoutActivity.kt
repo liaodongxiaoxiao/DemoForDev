@@ -4,15 +4,15 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
+import com.karl.demo.BaseActivity
 import com.karl.demo.R
+import com.karl.demo.databinding.Activity3FlexboxLayoutBinding
 import com.karl.kotlin.extension.inflate
 import com.karl.kotlin.extension.toast
-import kotlinx.android.synthetic.main.activity_3_flexbox_layout.*
 
 
 /**
@@ -20,15 +20,14 @@ import kotlinx.android.synthetic.main.activity_3_flexbox_layout.*
  * https://github.com/google/flexbox-layout
  *
  */
-class FlexboxLayoutActivity : AppCompatActivity() {
+class FlexboxLayoutActivity :
+    BaseActivity<Activity3FlexboxLayoutBinding>(Activity3FlexboxLayoutBinding::inflate) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_3_flexbox_layout)
 
         val layoutManager = FlexboxLayoutManager(this)
         layoutManager.flexDirection = FlexDirection.ROW
         layoutManager.justifyContent = JustifyContent.FLEX_START
-        rv_demo.layoutManager = layoutManager
 
         val flexBoxAdapter = FlexBoxAdapter()
         flexBoxAdapter.setOnItemClickListener(object : FlexBoxAdapter.OnItemClickListener {
@@ -36,7 +35,11 @@ class FlexboxLayoutActivity : AppCompatActivity() {
                 toast(str)
             }
         })
-        rv_demo.adapter = flexBoxAdapter
+
+        binding.rvDemo.apply {
+            this.layoutManager = layoutManager
+            this.adapter = flexBoxAdapter
+        }
     }
 }
 

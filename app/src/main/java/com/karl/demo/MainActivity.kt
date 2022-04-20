@@ -1,29 +1,26 @@
 package com.karl.demo
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.karl.demo.databinding.ActivityMainBinding
 import com.karl.demo.extesion.justStartActivity
-import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        btn_android.setOnClickListener {
+        binding.btnAndroid.setOnClickListener {
             startActivity(Intent(this, AndroidActivity::class.java))
         }
 
-        btn_third.setOnClickListener {
+        binding.btnThird.setOnClickListener {
             startActivity(Intent(this, ThirdLibActivity::class.java))
         }
 
-        btn_demo.setOnClickListener {
+        binding.btnDemo.setOnClickListener {
             justStartActivity(DemoActivity::class.java)
         }
 
-        btn_tools.setOnClickListener {
+        binding.btnTools.setOnClickListener {
             justStartActivity(ToolsPageActivity::class.java)
         }
 

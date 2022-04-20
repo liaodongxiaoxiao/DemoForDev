@@ -2,56 +2,59 @@ package com.karl.demo
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.karl.demo.databinding.ActivityDemoBinding
 import com.karl.demo.demo.*
 import com.karl.demo.extesion.justStartActivity
-import kotlinx.android.synthetic.main.activity_demo.*
 
 class DemoActivity : AppCompatActivity() {
+    private lateinit var binding:ActivityDemoBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_demo)
-
+        binding = ActivityDemoBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
         /*btn_demo_scrollview.setOnClickListener {
             justStartActivity(ScrollViewDemoActivity::class.java)
         }*/
-
-        btn_demo_back.setOnClickListener {
+        binding.btnDemoBack.setOnClickListener {
             justStartActivity(BackKeyDemoActivity::class.java)
         }
 
-        btn_demo_mqtt.setOnClickListener {
+        binding.btnDemoMqtt.setOnClickListener {
             justStartActivity(MQTTDemoActivity::class.java)
         }
 
-        btn_demo_html.setOnClickListener {
+        binding.btnDemoHtml.setOnClickListener {
             justStartActivity(HtmlDemoActivity::class.java)
         }
 
-        btn_okhttp_util.setOnClickListener {
+        binding.btnOkhttpUtil.setOnClickListener {
             justStartActivity(OkHttpUtilsDemoActivity::class.java)
         }
 
-        btn_Scrollview_demo.setOnClickListener {
+        binding.btnScrollviewDemo.setOnClickListener {
             justStartActivity(ScrollViewDemoActivity::class.java)
         }
 
-        btn_Scrollview_bottom.setOnClickListener {
+        binding.btnScrollviewBottom.setOnClickListener {
             justStartActivity(ScrollViewListenerDemoActivity::class.java)
         }
 
-        btn_view_to_image.setOnClickListener {
+        binding.btnViewToImage.setOnClickListener {
             justStartActivity(ViewToImageActivity::class.java)
         }
 
-        btn_to_do.setOnClickListener {
+        binding.btnToDo.setOnClickListener {
             justStartActivity(LoginActivity::class.java)
         }
 
-        btn_weather.setOnClickListener {
+        binding.btnWeather.setOnClickListener {
             justStartActivity(WeatherDemoActivity::class.java)
         }
 
-        btn_lottery.setOnClickListener {
+        binding.btnLottery.setOnClickListener {
             justStartActivity(LotteryDemoActivity::class.java)
         }
 

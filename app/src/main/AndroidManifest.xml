@@ -17,6 +17,28 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DemoForDev"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".android.CoordinatorLayoutActivity"
+            android:exported="false">
+
+        </activity>
+        <activity
+            android:theme="@style/Theme.DemoForDev.NoActionBar"
+            android:name=".third.BannerActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".android.MotionLayout4Activity"
+            >
+
+            <!--
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            -->
+        </activity>
         <activity android:name=".demo.ScrollViewListenerDemoActivity" />
         <activity android:name=".demo.ViewToImageActivity" />
         <activity android:name=".demo.OkHttpUtilsDemoActivity" />
@@ -52,13 +74,18 @@
         <activity android:name=".ThirdLibActivity" />
         <activity android:name=".android.ViewOutlineProviderActivity" />
         <activity android:name=".AndroidActivity" />
-        <activity android:name=".MainActivity">
+        <activity
+            android:exported="true"
+            android:theme="@style/Theme.DemoForDev.NoActionBar"
+            android:name=".MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- setting for mqtt -->
+        </activity>
+
+        <!-- setting for mqtt -->
         <service android:name="org.eclipse.paho.android.service.MqttService" />
     </application>
 

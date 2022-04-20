@@ -5,26 +5,24 @@ import android.text.TextUtils
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
+import com.karl.demo.BaseActivity
 import com.karl.demo.R
+import com.karl.demo.databinding.ActivityMmkvBinding
 import com.karl.demo.extesion.hideSoftKeyboard
 import com.karl.kotlin.extension.inflate
 import com.karl.kotlin.extension.log
 import com.karl.kotlin.extension.toast
 import com.tencent.mmkv.MMKV
-import kotlinx.android.synthetic.main.activity_mmkv.*
-import kotlinx.android.synthetic.main.activity_preferences_data_store.et_search
-import kotlinx.android.synthetic.main.activity_preferences_data_store.rv_list
 import java.util.*
 
 
-class MMKVActivity : AppCompatActivity() {
+class MMKVActivity : BaseActivity<ActivityMmkvBinding>(ActivityMmkvBinding::inflate) {
 
     private lateinit var keywordsAdapter: KeywordAdapter
     private val key: String = "HISTORY"
@@ -33,7 +31,6 @@ class MMKVActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_mmkv)
 
         initAndBindEvent()
         getHistory()
@@ -64,21 +61,19 @@ class MMKVActivity : AppCompatActivity() {
 
     private fun initAndBindEvent() {
 
-
-        et_search.setOnEditorActionListener { _, actionId, event ->
+        binding.etSearch.setOnEditorActionListener { _, actionId, event ->
             //触发搜索方法
             if ((actionId == 0 || actionId == 3) && event != null) {
                 hideSoftKeyboard()
-                toSearch(et_search.text.toString())
+                toSearch(binding.etSearch.text.toString())
                 true
             }
             false
         }
-        btn_refresh.setOnClickListener {
+        binding.btnRefresh.setOnClickListener {
             getHistory()
         }
-
-        btn_clear.setOnClickListener {
+        binding.btnClear.setOnClickListener {
             kv?.removeValueForKey(key)
             getHistory()
         }
@@ -86,11 +81,13 @@ class MMKVActivity : AppCompatActivity() {
         val layoutManager = FlexboxLayoutManager(this)
         layoutManager.flexDirection = FlexDirection.ROW
         layoutManager.justifyContent = JustifyContent.FLEX_START
-        rv_list.layoutManager = layoutManager
 
         keywordsAdapter = KeywordAdapter()
+        binding.rvList.apply {
+            this.layoutManager = layoutManager
+            this.adapter = keywordsAdapter
+        }
 
-        rv_list.adapter = keywordsAdapter
     }
 
     private fun toSearch(keyword: String) {

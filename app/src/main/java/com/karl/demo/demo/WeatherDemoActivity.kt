@@ -5,10 +5,11 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.karl.demo.BaseActivity
 import com.karl.demo.R
+import com.karl.demo.databinding.ActivityDemoWeatherBinding
 import com.karl.demo.demo.entity.DivisionEntity
 import com.karl.demo.demo.entity.HourlyForecast
 import com.karl.demo.demo.entity.WeatherEntity
@@ -17,17 +18,15 @@ import com.karl.kotlin.extension.inflate
 import com.karl.kotlin.extension.inflateNullRoot
 import com.karl.kotlin.extension.log
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_demo_weather.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class WeatherDemoActivity : AppCompatActivity() {
+class WeatherDemoActivity :
+    BaseActivity<ActivityDemoWeatherBinding>(ActivityDemoWeatherBinding::inflate) {
     @Inject
     lateinit var weatherViewModel: WeatherViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_demo_weather)
-
         bindEvent()
         observe()
     }
@@ -35,7 +34,7 @@ class WeatherDemoActivity : AppCompatActivity() {
     private fun observe() {
         weatherViewModel.current.observe(this, {
             if (it != null) {
-                tv_current.text = "当前城市：${it.name}"
+                binding.tvCurrent.text = "当前城市：${it.name}"
                 weatherViewModel.getCityWeather(it.value)
             }
         })
@@ -57,8 +56,12 @@ class WeatherDemoActivity : AppCompatActivity() {
     }
 
     private fun setWeatherInfo(weather: WeatherEntity) {
-        rv_hours.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        rv_hours.adapter = HoursForecastAdapter(weather.hourly_forecast)
+        binding.rvHours.apply {
+            this.layoutManager =
+                LinearLayoutManager(this@WeatherDemoActivity, LinearLayoutManager.HORIZONTAL, false)
+            this.adapter = HoursForecastAdapter(weather.hourly_forecast)
+        }
+
     }
 
     private fun bindEvent() {

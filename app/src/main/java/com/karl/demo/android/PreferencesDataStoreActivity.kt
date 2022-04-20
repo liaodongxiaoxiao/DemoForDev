@@ -1,50 +1,41 @@
 package com.karl.demo.android
 
+//import androidx.datastore.createDataStore
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
-import androidx.datastore.core.CorruptionException
-import androidx.datastore.core.DataStore
 import androidx.datastore.core.Serializer
-import androidx.datastore.createDataStore
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
-import com.google.protobuf.InvalidProtocolBufferException
+import com.karl.demo.BaseActivity
 import com.karl.demo.KeywordsHistory
 import com.karl.demo.R
+import com.karl.demo.databinding.ActivityPreferencesDataStoreBinding
 import com.karl.demo.extesion.hideSoftKeyboard
 import com.karl.kotlin.extension.inflate
 import com.karl.kotlin.extension.log
 import com.karl.kotlin.extension.toast
-import kotlinx.android.synthetic.main.activity_preferences_data_store.*
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.launch
-import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
-import java.util.*
 
-class PreferencesDataStoreActivity : AppCompatActivity() {
+class PreferencesDataStoreActivity :
+    BaseActivity<ActivityPreferencesDataStoreBinding>(ActivityPreferencesDataStoreBinding::inflate) {
 
     private lateinit var keywordsAdapter: KeywordsAdapter
 
-    private val dataStore: DataStore<KeywordsHistory> = createDataStore(
+    /*private val dataStore: DataStore<KeywordsHistory> = createDataStore(
         fileName = "history_keywords.pd",
         serializer = KeywordsHistorySerializer
-    )
+    )*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_preferences_data_store)
+        //setContentView(R.layout.activity_preferences_data_store)
         initAndBindEvent()
         getHistory()
 
@@ -52,7 +43,7 @@ class PreferencesDataStoreActivity : AppCompatActivity() {
 
     private fun getHistory() {
         GlobalScope.launch {
-            val dataFlow: Flow<KeywordsHistory> = dataStore.data
+            /*val dataFlow: Flow<KeywordsHistory> = dataStore.data
                 .catch { exception ->
                     // dataStore.data throws an IOException when an error is encountered when reading data
                     if (exception is IOException) {
@@ -61,11 +52,12 @@ class PreferencesDataStoreActivity : AppCompatActivity() {
                     } else {
                         throw exception
                     }
-                }
+                }*/
 
             //val data:MutableList<KeywordsHistory> = mutableListOf()
 
-            val list = dataFlow.toList()
+            //val list = dataFlow.toList()
+            val list = emptyList<KeywordsHistory>()
             list.log()
             keywordsAdapter.setData(list)
             /* userPreferencesFlow.collect { it ->
@@ -78,34 +70,36 @@ class PreferencesDataStoreActivity : AppCompatActivity() {
     }
 
     private fun initAndBindEvent() {
-        tv_hi.text = dataStore.toString()
-
-        et_search.setOnEditorActionListener { _, actionId, event ->
-            //触发搜索方法
-            if ((actionId == 0 || actionId == 3) && event != null) {
-                hideSoftKeyboard()
-                toSearch(et_search.text.toString())
-                true
+        //tv_hi.text = dataStore.toString()
+        binding.apply {
+            etSearch.setOnEditorActionListener { _, actionId, event ->
+                //触发搜索方法
+                if ((actionId == 0 || actionId == 3) && event != null) {
+                    hideSoftKeyboard()
+                    toSearch(etSearch.text.toString())
+                    true
+                }
+                false
             }
-            false
+
+            val layoutManager = FlexboxLayoutManager(this@PreferencesDataStoreActivity)
+            layoutManager.flexDirection = FlexDirection.ROW
+            layoutManager.justifyContent = JustifyContent.FLEX_START
+            rvList.layoutManager = layoutManager
+
+            keywordsAdapter = KeywordsAdapter()
+
+            rvList.adapter = keywordsAdapter
         }
 
-        val layoutManager = FlexboxLayoutManager(this)
-        layoutManager.flexDirection = FlexDirection.ROW
-        layoutManager.justifyContent = JustifyContent.FLEX_START
-        rv_list.layoutManager = layoutManager
-
-        keywordsAdapter = KeywordsAdapter()
-
-        rv_list.adapter = keywordsAdapter
     }
 
     private fun toSearch(keyword: String) {
         toast("正在搜索...")
         GlobalScope.launch {
-            dataStore.updateData { keywords ->
+            /*dataStore.updateData { keywords ->
                 keywords.toBuilder().setKeywords(keyword).setUpdateTime(Date().time).build()
-            }
+            }*/
         }
 
     }
@@ -114,7 +108,15 @@ class PreferencesDataStoreActivity : AppCompatActivity() {
         override val defaultValue: KeywordsHistory
             get() = KeywordsHistory.getDefaultInstance()
 
-        override fun readFrom(input: InputStream): KeywordsHistory {
+        override suspend fun readFrom(input: InputStream): KeywordsHistory {
+            TODO("Not yet implemented")
+        }
+
+        override suspend fun writeTo(t: KeywordsHistory, output: OutputStream) {
+            TODO("Not yet implemented")
+        }
+
+        /*override fun readFrom(input: InputStream): KeywordsHistory {
             try {
                 return KeywordsHistory.parseFrom(input)
             } catch (exception: InvalidProtocolBufferException) {
@@ -123,7 +125,7 @@ class PreferencesDataStoreActivity : AppCompatActivity() {
         }
 
         override fun writeTo(t: KeywordsHistory, output: OutputStream) = t.writeTo(output)
-
+*/
     }
 
 }

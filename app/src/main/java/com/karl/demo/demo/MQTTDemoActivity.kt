@@ -1,13 +1,12 @@
 package com.karl.demo.demo
 
 import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.karl.demo.R
+import com.karl.demo.BaseActivity
+import com.karl.demo.databinding.ActivityDemoMqttBinding
 import com.karl.kotlin.extension.isEmpty
 import com.karl.kotlin.extension.log
 import com.karl.kotlin.extension.toast
-import kotlinx.android.synthetic.main.activity_demo_mqtt.*
 import org.eclipse.paho.android.service.MqttAndroidClient
 import org.eclipse.paho.client.mqttv3.*
 
@@ -15,37 +14,39 @@ import org.eclipse.paho.client.mqttv3.*
  * MQTT demo
  * 参考：https://www.emqx.cn/blog/android-connects-mqtt-using-kotlin
  */
-class MQTTDemoActivity : AppCompatActivity() {
+class MQTTDemoActivity : BaseActivity<ActivityDemoMqttBinding>(ActivityDemoMqttBinding::inflate) {
 
     private lateinit var mqttClient: MqttAndroidClient
     private var host = "192.168.1.103:1883"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_demo_mqtt)
+        binding.apply {
 
-        btn_start.setOnClickListener {
-            connect(this)
-        }
 
-        et_host.setText(host)
-
-        btn_subscribe.setOnClickListener {
-            if (et_topic.isEmpty()) {
-                toast("请输入要订阅的主题")
-                return@setOnClickListener
+            btnStart.setOnClickListener {
+                connect(this@MQTTDemoActivity)
             }
 
-            subscribe(et_topic.text.toString())
+            etHost.setText(host)
+
+            btnSubscribe.setOnClickListener {
+                if (etTopic.isEmpty()) {
+                    toast("请输入要订阅的主题")
+                    return@setOnClickListener
+                }
+
+                subscribe(etTopic.text.toString())
+            }
         }
     }
 
     fun connect(context: Context) {
-        if (et_host.isEmpty()){
+        if (binding.etHost.isEmpty()) {
             toast("请求输入主机地址")
             return
         }
-        val serverURI = "tcp://${et_host.text}"
+        val serverURI = "tcp://${binding.etHost.text}"
         mqttClient = MqttAndroidClient(context, serverURI, "kotlin_client")
         mqttClient.setCallback(object : MqttCallback {
             override fun messageArrived(topic: String?, message: MqttMessage?) {

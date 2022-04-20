@@ -1,20 +1,19 @@
 package com.karl.demo
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.karl.demo.databinding.ActivityToolsPageBinding
 import com.karl.demo.extesion.justStartActivity
 import com.karl.demo.tools.OpacityActivity
-import kotlinx.android.synthetic.main.activity_tools_page.*
 
 /**
  * 工具类
  */
-class ToolsPageActivity : AppCompatActivity() {
+class ToolsPageActivity : BaseActivity<ActivityToolsPageBinding>(ActivityToolsPageBinding::inflate) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_tools_page)
+        //setContentView(R.layout.activity_tools_page)
 
-        btn_tools_background.setOnClickListener {
+        binding.btnToolsBackground.setOnClickListener {
             justStartActivity(OpacityActivity::class.java)
         }
     }

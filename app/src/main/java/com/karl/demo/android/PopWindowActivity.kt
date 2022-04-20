@@ -1,6 +1,5 @@
 package com.karl.demo.android
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -9,30 +8,37 @@ import android.view.ViewGroup
 import android.widget.PopupWindow
 import android.widget.TextView
 import androidx.core.widget.PopupWindowCompat
+import com.karl.demo.BaseActivity
 import com.karl.demo.R
-import kotlinx.android.synthetic.main.activity_android_pop_window.*
+import com.karl.demo.databinding.ActivityAndroidPopWindowBinding
 
-class PopWindowActivity : AppCompatActivity() {
+class PopWindowActivity :
+    BaseActivity<ActivityAndroidPopWindowBinding>(ActivityAndroidPopWindowBinding::inflate) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_android_pop_window)
+        //setContentView(R.layout.activity_android_pop_window)
 
-        btn_more.setOnClickListener {
+        binding.btnMore.setOnClickListener {
             val mLayoutInflater = getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
             val menuView = mLayoutInflater.inflate(
-                R.layout.layout_pop, null, false) as ViewGroup
-            val pw = PopupWindow(menuView, ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT, true)
+                R.layout.layout_pop, null, false
+            ) as ViewGroup
+            val pw = PopupWindow(
+                menuView, ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT, true
+            )
 
             /*menuView.setPadding(0, 0, 0, 0);
             menuView.setBackgroundDrawable(getResources().getDrawable(R.drawable.pop_bg))*/
             pw.isOutsideTouchable = false
 
-            pw.contentView.measure(makeDropDownMeasureSpec(pw.width),
-                makeDropDownMeasureSpec(pw.height))
+            pw.contentView.measure(
+                makeDropDownMeasureSpec(pw.width),
+                makeDropDownMeasureSpec(pw.height)
+            )
 
-            val offsetY = -(pw.contentView.measuredHeight + btn_more.height)
-            PopupWindowCompat.showAsDropDown(pw, btn_more, -10, offsetY, Gravity.START)
+            val offsetY = -(pw.contentView.measuredHeight + binding.btnMore.height)
+            PopupWindowCompat.showAsDropDown(pw, binding.btnMore, -10, offsetY, Gravity.START)
 
             val tv: TextView = menuView.findViewById(R.id.tv)
             tv.setOnClickListener {

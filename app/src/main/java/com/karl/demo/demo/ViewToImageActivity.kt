@@ -1,37 +1,33 @@
 package com.karl.demo.demo
 
-import android.Manifest
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import com.karl.demo.R
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
-import android.net.Uri
+import android.os.Bundle
 import android.util.Log
 import android.view.View
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
-import com.karl.kotlin.extension.toast
+import com.karl.demo.BaseActivity
+import com.karl.demo.R
+import com.karl.demo.databinding.ActivityDemoViewToImageBinding
 import com.zhy.http.okhttp.utils.L
-import kotlinx.android.synthetic.main.activity_demo_view_to_image.*
-import pub.devrel.easypermissions.EasyPermissions
 import java.io.File
 import java.io.FileOutputStream
 import java.io.OutputStream
-import java.lang.Exception
 
 
-class ViewToImageActivity : AppCompatActivity(), ActivityCompat.OnRequestPermissionsResultCallback {
+class ViewToImageActivity :
+    BaseActivity<ActivityDemoViewToImageBinding>(ActivityDemoViewToImageBinding::inflate),
+    ActivityCompat.OnRequestPermissionsResultCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_demo_view_to_image)
+        //setContentView(R.layout.activity_demo_view_to_image)
 
-        btn_save.setOnClickListener {
+        binding.btnSave.setOnClickListener {
             ViewToImagePermissionHelper.getInstance(this).execute {
                 Log.e("TAG", "on click ... ")
                 try {
-                    viewConversionBitmap(v1)?.let { bitmap2uri(it) }
+                    viewConversionBitmap(binding.v1)?.let { bitmap2uri(it) }
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }

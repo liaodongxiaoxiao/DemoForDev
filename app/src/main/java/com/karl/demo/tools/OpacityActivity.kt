@@ -1,27 +1,28 @@
 package com.karl.demo.tools
 
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.karl.demo.BaseActivity
 import com.karl.demo.R
+import com.karl.demo.databinding.ActivityToolsOpacityBinding
 import com.karl.kotlin.extension.inflate
-import kotlinx.android.synthetic.main.activity_tools_opacity.*
 
 /**
  * 不透明度
  */
-class OpacityActivity : AppCompatActivity() {
+class OpacityActivity :
+    BaseActivity<ActivityToolsOpacityBinding>(ActivityToolsOpacityBinding::inflate) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_tools_opacity)
-
-        rv.layoutManager = LinearLayoutManager(this)
-        rv.adapter = OpacityAdapter()
+        binding.rv.apply {
+            layoutManager = LinearLayoutManager(this@OpacityActivity)
+            adapter = OpacityAdapter()
+        }
     }
 
 }
@@ -143,7 +144,7 @@ class OpacityAdapter : RecyclerView.Adapter<OpacityAdapter.OpacityViewHolder>() 
     override fun onBindViewHolder(holder: OpacityViewHolder, position: Int) {
         if (position % 2 == 1) {
             holder.itemView.setBackgroundColor(Color.parseColor("#E5F9F9"))
-        }else{
+        } else {
             holder.itemView.setBackgroundColor(Color.parseColor("#ffffff"))
         }
         holder.tvKey.text = data[position].first

@@ -7,27 +7,30 @@ import com.karl.demo.android.MotionLayoutActivity
 import com.karl.demo.android.PopWindowActivity
 import com.karl.demo.android.PreferencesDataStoreActivity
 import com.karl.demo.android.ViewOutlineProviderActivity
+import com.karl.demo.databinding.ActivityAndroidBinding
 import com.karl.demo.extesion.justStartActivity
-import kotlinx.android.synthetic.main.activity_android.*
 
 class AndroidActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityAndroidBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_android)
+        binding = ActivityAndroidBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
-        btn_view_outline_provider.setOnClickListener {
+        binding.btnViewOutlineProvider.setOnClickListener {
             startActivity(Intent(this, ViewOutlineProviderActivity::class.java))
         }
-
-        btn_motion_layout.setOnClickListener {
+        binding.btnMotionLayout.setOnClickListener {
             startActivity(Intent(this, MotionLayoutActivity::class.java))
         }
 
-        btn_preferences_data_store.setOnClickListener {
+        binding.btnPreferencesDataStore.setOnClickListener {
             justStartActivity(PreferencesDataStoreActivity::class.java)
         }
 
-        btn_pop.setOnClickListener {
+        binding.btnPop.setOnClickListener {
             justStartActivity(PopWindowActivity::class.java)
         }
     }

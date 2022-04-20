@@ -1,7 +1,6 @@
 package com.karl.demo.third
 
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
@@ -9,49 +8,59 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
+import com.karl.demo.BaseActivity
 import com.karl.demo.R
+import com.karl.demo.databinding.Activity3rdSmartRefreshLayoutBinding
 import com.karl.kotlin.extension.inflate
-import kotlinx.android.synthetic.main.activity_3rd_smart_refresh_layout.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.random.Random
 
-class SmartRefreshLayoutActivity : AppCompatActivity() {
+class SmartRefreshLayoutActivity :
+    BaseActivity<Activity3rdSmartRefreshLayoutBinding>(Activity3rdSmartRefreshLayoutBinding::inflate) {
 
     val adapter = OpacityAdapter()
     var pageNumber = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_3rd_smart_refresh_layout)
 
-        btn_reset.setOnClickListener {
+        binding.btnReset.setOnClickListener {
 
             //srl.refreshFooter?.view?.visibility = View.GONE
-            srl.setEnableLoadMore(true)
-            srl.setNoMoreData(false)
-            //srl.autoRefresh()
-            srl.closeHeaderOrFooter()
+            binding.srl.apply {
+                setEnableLoadMore(true)
+                setNoMoreData(false)
+                //srl.autoRefresh()
+                closeHeaderOrFooter()
+            }
+
             pageNumber = 1
             getDataFromNet()
         }
 
-        rv.layoutManager = LinearLayoutManager(this)
-        rv.adapter = adapter
 
-        srl.setOnLoadMoreListener {
-            //srl.refreshFooter?.view?.visibility = View.VISIBLE
-            pageNumber += 1
-            getDataFromNet()
+
+        binding.rv.apply {
+            this.layoutManager = LinearLayoutManager(this@SmartRefreshLayoutActivity)
+            this.adapter = adapter
+        }
+        binding.srl.apply {
+            setOnLoadMoreListener {
+                //srl.refreshFooter?.view?.visibility = View.VISIBLE
+                pageNumber += 1
+                getDataFromNet()
+            }
+
+            setOnRefreshListener {
+                this.setNoMoreData(false)
+                pageNumber = 1
+                getDataFromNet()
+            }
         }
 
-        srl.setOnRefreshListener {
-            srl.setNoMoreData(false)
-            pageNumber = 1
-            getDataFromNet()
-        }
 
         pageNumber = 1
         getDataFromNet()
@@ -71,14 +80,14 @@ class SmartRefreshLayoutActivity : AppCompatActivity() {
 
             if (!data.hasNext) {
                 if (pageNumber == 1) {
-                    srl.setEnableLoadMore(false)
+                    binding.srl.setEnableLoadMore(false)
                 } else {
-                    srl.setNoMoreData(true)
+                    binding.srl.setNoMoreData(true)
                 }
             }
 
-            srl.finishLoadMore()
-            srl.finishRefresh()
+            binding.srl.finishLoadMore()
+            binding.srl.finishRefresh()
         }
     }
 
