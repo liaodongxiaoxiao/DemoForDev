@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.coder.karl.mqtt.lib">
+
+    <application >
+        <provider
+            android:name=".provider.InitContentProvider"
+            android:authorities="${applicationId}.appinitprovider"
+            android:exported="false"
+            android:initOrder="900"/>
+        <!-- setting for mqtt -->
+        <service android:name="org.eclipse.paho.android.service.MqttService" />
+    </application>
+
+</manifest>

@@ -1,14 +1,15 @@
 package com.karl.demo.demo
 
-import android.content.Context
 import android.os.Bundle
+import com.coder.karl.mqtt.lib.MqttLib
+import com.coder.karl.mqtt.lib.listener.MqttActionListener
+import com.coder.karl.mqtt.lib.listener.MqttConnectListener
+import com.coder.karl.mqtt.lib.listener.OnArrivedMessageListener
+import com.google.gson.JsonObject
 import com.karl.demo.BaseActivity
 import com.karl.demo.databinding.ActivityDemoMqttBinding
 import com.karl.kotlin.extension.isEmpty
-import com.karl.kotlin.extension.log
 import com.karl.kotlin.extension.toast
-import org.eclipse.paho.android.service.MqttAndroidClient
-import org.eclipse.paho.client.mqttv3.*
 
 /**
  * MQTT demo
@@ -16,16 +17,38 @@ import org.eclipse.paho.client.mqttv3.*
  */
 class MQTTDemoActivity : BaseActivity<ActivityDemoMqttBinding>(ActivityDemoMqttBinding::inflate) {
 
-    private lateinit var mqttClient: MqttAndroidClient
-    private var host = "192.168.1.103:1883"
+    private val defaultTopic = "/iot/action"
+    private var host = "192.168.1.121:1883"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        MqttLib.setupHost("192.168.1.121:1883")
+        MqttLib.addConnectionListener(object : MqttConnectListener {
+            override fun onConnected() {
+                toast("connected")
+                toLogin()
+            }
+
+            override fun onDisConnected(errorCode: Int, errorMessage: String?) {
+                toast("disConnected")
+            }
+
+        })
+        MqttLib.connect()
         binding.apply {
-
-
+            etPublishTopic.setText("online")
+            val json = JsonObject()
+            json.addProperty("id","app001")
+            json.addProperty("name","Android-app")
+            json.addProperty("type",1)
+            json.addProperty("status",1)
+            etPublishMsg.setText(json.toString())
+            btnPublish.setOnClickListener {
+                MqttLib.publish(etPublishTopic.text.toString(),etPublishMsg.text.toString())
+            }
+            etTopic.setText(defaultTopic)
             btnStart.setOnClickListener {
-                connect(this@MQTTDemoActivity)
+                //connect(this@MQTTDemoActivity)
             }
 
             etHost.setText(host)
@@ -36,114 +59,32 @@ class MQTTDemoActivity : BaseActivity<ActivityDemoMqttBinding>(ActivityDemoMqttB
                     return@setOnClickListener
                 }
 
-                subscribe(etTopic.text.toString())
+                MqttLib.subscribe(
+                    etTopic.text.toString(),
+                    actionListener = object : MqttActionListener {
+                        override fun onSuccess(topic: String) {
+                            toast("$topic 订阅成功...")
+                        }
+
+                        override fun onFailure(exception: Throwable?) {
+                            toast(" 订阅失败：${exception?.message}")
+                        }
+
+                    })
+                MqttLib.setArrivedMessageListener(etTopic.text.toString(),
+                    object : OnArrivedMessageListener {
+                        override fun messageArrived(message: String?) {
+                            //Log.e(, "message:${message}")
+                            tvRev.append(message)
+                            tvRev.append("\n")
+                        }
+                    })
             }
         }
     }
 
-    fun connect(context: Context) {
-        if (binding.etHost.isEmpty()) {
-            toast("请求输入主机地址")
-            return
-        }
-        val serverURI = "tcp://${binding.etHost.text}"
-        mqttClient = MqttAndroidClient(context, serverURI, "kotlin_client")
-        mqttClient.setCallback(object : MqttCallback {
-            override fun messageArrived(topic: String?, message: MqttMessage?) {
-                "Receive message: ${message.toString()} from topic: $topic".log()
-            }
-
-            override fun connectionLost(cause: Throwable?) {
-                "Connection lost ${cause.toString()}".log()
-            }
-
-            override fun deliveryComplete(token: IMqttDeliveryToken?) {
-
-            }
-        })
-        val options = MqttConnectOptions()
-        try {
-            mqttClient.connect(options, null, object : IMqttActionListener {
-                override fun onSuccess(asyncActionToken: IMqttToken?) {
-                    "Connection success".log()
-                }
-
-                override fun onFailure(asyncActionToken: IMqttToken?, exception: Throwable?) {
-                    "Connection failure".log()
-                }
-            })
-        } catch (e: MqttException) {
-            e.printStackTrace()
-        }
-
-    }
-
-    fun subscribe(topic: String, qos: Int = 1) {
-        try {
-            mqttClient.subscribe(topic, qos, null, object : IMqttActionListener {
-                override fun onSuccess(asyncActionToken: IMqttToken?) {
-                    "Subscribed to $topic".log()
-                }
-
-                override fun onFailure(asyncActionToken: IMqttToken?, exception: Throwable?) {
-                    "Failed to subscribe $topic".log()
-                }
-            })
-        } catch (e: MqttException) {
-            e.printStackTrace()
-        }
-    }
-
-    fun unsubscribe(topic: String) {
-        try {
-            mqttClient.unsubscribe(topic, null, object : IMqttActionListener {
-                override fun onSuccess(asyncActionToken: IMqttToken?) {
-                    "Unsubscribed to $topic".log()
-                }
-
-                override fun onFailure(asyncActionToken: IMqttToken?, exception: Throwable?) {
-                    "Failed to unsubscribe $topic".log()
-                }
-            })
-        } catch (e: MqttException) {
-            e.printStackTrace()
-        }
-    }
-
-    fun publish(topic: String, msg: String, qos: Int = 1, retained: Boolean = false) {
-        try {
-            val message = MqttMessage()
-            message.payload = msg.toByteArray()
-            message.qos = qos
-            message.isRetained = retained
-            mqttClient.publish(topic, message, null, object : IMqttActionListener {
-                override fun onSuccess(asyncActionToken: IMqttToken?) {
-                    "$msg published to $topic".log()
-                }
-
-                override fun onFailure(asyncActionToken: IMqttToken?, exception: Throwable?) {
-                    "Failed to publish $msg to $topic".log()
-                }
-            })
-        } catch (e: MqttException) {
-            e.printStackTrace()
-        }
-    }
-
-    fun disconnect() {
-        try {
-            mqttClient.disconnect(null, object : IMqttActionListener {
-                override fun onSuccess(asyncActionToken: IMqttToken?) {
-                    "Disconnected".log()
-                }
-
-                override fun onFailure(asyncActionToken: IMqttToken?, exception: Throwable?) {
-                    "Failed to disconnect".log()
-                }
-            })
-        } catch (e: MqttException) {
-            e.printStackTrace()
-        }
+    private fun toLogin() {
+        MqttLib.publish("/online", "{'id':'app001','name':'Android-app','type':1,'status':1}")
     }
 
 }
