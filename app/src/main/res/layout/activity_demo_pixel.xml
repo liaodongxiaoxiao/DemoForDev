@@ -1,19 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <GridView
-        android:background="@color/colorAccent"
-        android:id="@+id/gv"
-        android:layout_width="@dimen/dp_400"
-        android:layout_height="@dimen/dp_410"
-        android:horizontalSpacing="0dp"
-        android:numColumns="16"
-        android:verticalSpacing="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <GridView
+            android:id="@+id/gv"
+            android:layout_width="@dimen/dp_400"
+            android:layout_height="@dimen/dp_410"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:horizontalSpacing="0dp"
+            android:numColumns="16"
+            android:verticalSpacing="0dp"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <GridView
+            android:id="@+id/gv_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@color/colorAccent"
+            android:gravity="center"
+            android:horizontalSpacing="0dp"
+            android:numColumns="16"
+            android:verticalSpacing="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/title_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/dp_10"
+        android:paddingTop="@dimen/dp_10"
+        android:text="当前颜色" />
+
+    <TextView
+        android:id="@+id/tv_current"
+        android:layout_width="@dimen/dp_80"
+        android:layout_height="@dimen/dp_30"
+        android:layout_margin="@dimen/dp_5"
+        android:gravity="center"
+        android:text="未选择"
+        tools:background="@color/colorAccent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_10">
+
+        <ImageView
+            android:id="@+id/btn_clear"
+            android:layout_width="@dimen/dp_50"
+            android:layout_height="@dimen/dp_50"
+            android:src="@mipmap/ic_delete" />
+
+        <ImageView
+            android:id="@+id/btn_fill"
+            android:layout_width="@dimen/dp_50"
+            android:layout_height="@dimen/dp_50"
+            android:layout_marginStart="@dimen/dp_10"
+            android:src="@mipmap/ic_bucket" />
+
+        <ImageView
+            android:id="@+id/btn_save"
+            android:layout_width="@dimen/dp_50"
+            android:layout_height="@dimen/dp_50"
+            android:layout_marginStart="@dimen/dp_10"
+            android:src="@mipmap/ic_send" />
+
+        <ImageView
+            android:id="@+id/btn_save_img"
+            android:layout_width="@dimen/dp_50"
+            android:layout_height="@dimen/dp_50"
+            android:layout_marginStart="@dimen/dp_10"
+            android:src="@mipmap/ic_diskette" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="当前MQTT状态" />
+
+    <TextView
+        android:id="@+id/tv_mqtt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/tv_data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

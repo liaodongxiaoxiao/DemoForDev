@@ -28,8 +28,7 @@
             android:exported="false" />
 
         <activity
-            android:name=".android.MotionLayout4Activity"
-            >
+            android:name=".android.MotionLayout4Activity">
 
             <!--
             <intent-filter>
@@ -91,6 +90,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <provider
+            android:exported="false"
+            android:grantUriPermissions="true"
+            android:authorities="${applicationId}.provider"
+            android:name="androidx.core.content.FileProvider">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths"/>
+        </provider>
 
     </application>
 
