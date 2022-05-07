@@ -110,7 +110,7 @@ object MqttLib {
             mqttClient.subscribe(topic, qos, null, object : IMqttActionListener {
                 override fun onSuccess(asyncActionToken: IMqttToken?) {
                     LogUtils.d("Subscribed to $topic")
-                    actionListener?.onSuccess(topic)
+                    actionListener?.onSuccess()
                 }
 
                 override fun onFailure(asyncActionToken: IMqttToken?, exception: Throwable?) {
@@ -124,23 +124,32 @@ object MqttLib {
         }
     }
 
-    fun unsubscribe(topic: String) {
+    fun unsubscribe(topic: String, listener: MqttActionListener? = null) {
         try {
             mqttClient.unsubscribe(topic, null, object : IMqttActionListener {
                 override fun onSuccess(asyncActionToken: IMqttToken?) {
                     LogUtils.d("Unsubscribed to $topic")
+                    listener?.onSuccess()
                 }
 
                 override fun onFailure(asyncActionToken: IMqttToken?, exception: Throwable?) {
                     LogUtils.d("Failed to unsubscribe $topic")
+                    listener?.onFailure(exception)
                 }
             })
         } catch (e: MqttException) {
             e.printStackTrace()
+            listener?.onFailure(e)
         }
     }
 
-    fun publish(topic: String, msg: String, qos: Int = 0, retained: Boolean = false) {
+    fun publish(
+        topic: String,
+        msg: String,
+        qos: Int = 0,
+        retained: Boolean = false,
+        listener: MqttActionListener? = null
+    ) {
         try {
             val message = MqttMessage()
             message.payload = msg.toByteArray()
@@ -149,14 +158,17 @@ object MqttLib {
             mqttClient.publish(topic, message, null, object : IMqttActionListener {
                 override fun onSuccess(asyncActionToken: IMqttToken?) {
                     LogUtils.d("$msg published to $topic")
+                    listener?.onSuccess()
                 }
 
                 override fun onFailure(asyncActionToken: IMqttToken?, exception: Throwable?) {
                     LogUtils.d("Failed to publish $msg to $topic")
+                    listener?.onFailure(exception)
                 }
             })
         } catch (e: MqttException) {
             e.printStackTrace()
+            listener?.onFailure(e)
         }
     }
 

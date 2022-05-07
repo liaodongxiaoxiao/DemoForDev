@@ -62,8 +62,8 @@ class MQTTDemoActivity : BaseActivity<ActivityDemoMqttBinding>(ActivityDemoMqttB
                 MqttLib.subscribe(
                     etTopic.text.toString(),
                     actionListener = object : MqttActionListener {
-                        override fun onSuccess(topic: String) {
-                            toast("$topic 订阅成功...")
+                        override fun onSuccess() {
+                            toast("$ 订阅成功...")
                         }
 
                         override fun onFailure(exception: Throwable?) {
